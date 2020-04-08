@@ -5,6 +5,7 @@
 package it.polito.tdp.anagrammi;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.anagrammi.model.Model;
@@ -40,12 +41,25 @@ public class FXMLController {
 
     @FXML
     void CalcolaAnagrammi(ActionEvent event) {
-
+    	String parola=this.txtInput.getText();
+    	for(int i=0;i<parola.length();i++) {
+    		Character c=parola.charAt(i);
+    		if(!Character.isAlphabetic(c)) {
+    			txtAnagrammiErrati.setText("Inserire una parola che contenga sole lettere");
+    			return;
+    		}
+    	}
+    	List<String> anagrammi=model.cercaAnagrammi(parola);
+    	for(String s:anagrammi) {
+    		this.txtAnagrammiCorretti.setText(s+" ");
+    	}
     }
 
     @FXML
     void Reset(ActionEvent event) {
-
+    	this.txtInput.clear();
+    	this.txtAnagrammiCorretti.clear();
+    	this.txtAnagrammiErrati.clear();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

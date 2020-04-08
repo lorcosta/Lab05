@@ -1,6 +1,8 @@
 package it.polito.tdp.anagrammi;
 
 import javafx.application.Application;
+import static javafx.application.Application.launch;
+import it.polito.tdp.anagrammi.FXMLController;
 import it.polito.tdp.anagrammi.model.Model;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,16 +14,20 @@ public class EntryPoint extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-    	
+        
     	FXMLController controller;
-        FXMLLoader loader= FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
-        Parent root=loader.load();
-        
+    	
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene.fxml"));
+        Parent root = loader.load();
         Scene scene = new Scene(root);
-        controller=loader.getController();
-        
-        Model model=new Model();
-        controller.setModel(model);
+
+        controller = loader.getController();
+    	
+        /*
+		 * Create and set the model here!
+		 */
+        Model model= new Model();
+		controller.setModel(model);
         
         stage.setTitle("JavaFX and Maven");
         stage.setScene(scene);
