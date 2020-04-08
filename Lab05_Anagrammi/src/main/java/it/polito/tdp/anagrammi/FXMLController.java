@@ -41,6 +41,8 @@ public class FXMLController {
 
     @FXML
     void CalcolaAnagrammi(ActionEvent event) {
+    	this.txtAnagrammiCorretti.clear();
+    	this.txtAnagrammiErrati.clear();
     	String parola=this.txtInput.getText();
     	for(int i=0;i<parola.length();i++) {
     		Character c=parola.charAt(i);
@@ -51,7 +53,7 @@ public class FXMLController {
     	}
     	List<String> anagrammi=model.cercaAnagrammi(parola);
     	for(String s:anagrammi) {
-    		this.txtAnagrammiCorretti.setText(s+" ");
+    		this.txtAnagrammiErrati.appendText(s+"\n");
     	}
     }
 

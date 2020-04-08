@@ -3,8 +3,10 @@ package it.polito.tdp.anagrammi.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RicercaAnagrammi {
+import it.polito.tdp.anagrammi.DAO.AnagrammaDAO;
 
+public class RicercaAnagrammi {
+	private AnagrammaDAO dao= new AnagrammaDAO();
 	private List<String> anagrammi;
 	
 	/**
@@ -14,7 +16,7 @@ public class RicercaAnagrammi {
 	 */
 	public List<String> trovaAnagrammi(String parola){
 		this.anagrammi=new ArrayList<String>();
-		parola.toUpperCase();
+		parola=parola.toUpperCase();
 		List<Character> caratteri= new ArrayList<Character>();
 		for(int i=0;i<parola.length();i++) {
 			caratteri.add(parola.charAt(i));
@@ -36,8 +38,10 @@ public class RicercaAnagrammi {
 	 */
 	private void ricerca(String parziale,List<Character> caratteri ) {
 		if(caratteri.size()==0) {
-			this.anagrammi.add(parziale);
-			return;
+			if(dao.isCorrect(parziale)) {
+				this.anagrammi.add(parziale);
+				return;
+			}
 		}
 		for(Character c:caratteri) {
 			String tentativo=parziale+c;
