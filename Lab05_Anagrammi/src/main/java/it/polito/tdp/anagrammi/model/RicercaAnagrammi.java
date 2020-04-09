@@ -1,21 +1,26 @@
 package it.polito.tdp.anagrammi.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import it.polito.tdp.anagrammi.DAO.AnagrammaDAO;
 
 public class RicercaAnagrammi {
 	private AnagrammaDAO dao= new AnagrammaDAO();
-	private List<String> anagrammi;
+	private Map<String,String> anagrammi;
 	
 	/**
 	 * Genera tutti gli anagrammi di una parola data in input
 	 * @param parola da anagrammare
-	 * @return elenco degli anagrammi della parola data
+	 * @return {@link Map} che contiene nel keySet() un elenco di angrammi 
+	 * corretti (attenzione che gli anagrammi sono intervallati da valori di null
+	 * dove in corrispondenza è presente un values() che corrisponde ad un anagramma errato. 
+	 * Es. Key:tre-->Value:null; Key:null-->Value:ert
 	 */
-	public List<String> trovaAnagrammi(String parola){
-		this.anagrammi=new ArrayList<String>();
+	public Map<String,String> trovaAnagrammi(String parola){
+		this.anagrammi=new HashMap<String,String>();
 		parola=parola.toUpperCase();
 		List<Character> caratteri= new ArrayList<Character>();
 		for(int i=0;i<parola.length();i++) {
@@ -39,9 +44,9 @@ public class RicercaAnagrammi {
 	private void ricerca(String parziale,List<Character> caratteri ) {
 		if(caratteri.size()==0) {
 			if(dao.isCorrect(parziale)) {
-				this.anagrammi.add(parziale);
+				this.anagrammi.put(parziale,null);
 				return;
-			}
+			}else this.anagrammi.put(null,parziale);
 		}
 		for(Character c:caratteri) {
 			String tentativo=parziale+c;
@@ -49,6 +54,5 @@ public class RicercaAnagrammi {
 			caratteriAggiornati.remove(c);
 			ricerca(tentativo,caratteriAggiornati);
 		}
-		
 	}
 }

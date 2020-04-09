@@ -6,6 +6,7 @@ package it.polito.tdp.anagrammi;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.anagrammi.model.Model;
@@ -51,9 +52,21 @@ public class FXMLController {
     			return;
     		}
     	}
-    	List<String> anagrammi=model.cercaAnagrammi(parola);
-    	for(String s:anagrammi) {
-    		this.txtAnagrammiErrati.appendText(s+"\n");
+    	/*
+    	 * cercaAnagrammi() restituisce una mappa all'interno della quale nel keySet sono 
+    	 * contenuti gli anagrammi corretti mentre neu values sono contenuti gli anagrammi 
+    	 * errati
+    	 */
+    	Map<String,String> anagrammi=model.cercaAnagrammi(parola);
+    	for(String s:anagrammi.values()) {
+    		if(s!=null) {
+    			this.txtAnagrammiErrati.appendText(s+"\n");
+    		}
+    	}
+    	for(String s:anagrammi.keySet()) {
+    		if(s!=null) {
+    			this.txtAnagrammiCorretti.appendText(s+"\n");
+    		}
     	}
     }
 
